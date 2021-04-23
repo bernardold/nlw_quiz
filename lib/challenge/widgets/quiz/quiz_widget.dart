@@ -3,9 +3,9 @@ import 'package:nlw_quiz/challenge/widgets/answer/answer_widget.dart';
 import 'package:nlw_quiz/core/core.dart';
 
 class QuizWidget extends StatelessWidget {
-  const QuizWidget({Key? key, required this.title}) : super(key: key);
-
   final String title;
+
+  const QuizWidget({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

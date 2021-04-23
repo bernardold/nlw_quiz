@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:nlw_quiz/core/core.dart';
 
 class AnswerWidget extends StatelessWidget {
+  final String title;
+  final bool isSelected;
+  final bool isCorrect;
+
   const AnswerWidget({
     Key? key,
     required this.title,
     this.isSelected = false,
     this.isCorrect = false,
   }) : super(key: key);
-
-  final String title;
-  final bool isSelected;
-  final bool isCorrect;
 
   Color get _selectedColor =>
       isCorrect ? AppColors.darkGreen : AppColors.darkRed;
