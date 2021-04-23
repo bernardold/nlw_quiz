@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nlw_quiz/core/core.dart';
 import 'package:nlw_quiz/home/widgets/scorecard/scorecard_widget.dart';
+import 'package:nlw_quiz/shared/models/user_model.dart';
 
 class AppBarWidget extends PreferredSize {
-  AppBarWidget()
+  final UserModel user;
+
+  AppBarWidget({required this.user})
       : super(
           child: Container(
             child: Stack(
@@ -22,7 +25,7 @@ class AppBarWidget extends PreferredSize {
                           style: AppTextStyles.title,
                           children: [
                             TextSpan(
-                              text: 'Bernardo Duarte',
+                              text: user.name,
                               style: AppTextStyles.titleBold,
                             )
                           ],
@@ -34,8 +37,7 @@ class AppBarWidget extends PreferredSize {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
-                            image: NetworkImage(
-                                'https://avatars.githubusercontent.com/u/11081407'),
+                            image: NetworkImage(user.photoUrl),
                           ),
                         ),
                       ),
@@ -44,7 +46,7 @@ class AppBarWidget extends PreferredSize {
                 ),
                 Align(
                   alignment: Alignment(0.0, 1.0),
-                  child: ScorecardWidget(),
+                  child: ScorecardWidget(score: user.score),
                 ),
               ],
             ),

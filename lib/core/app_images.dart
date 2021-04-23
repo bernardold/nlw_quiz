@@ -8,3 +8,16 @@ class AppImages {
   static String get trophy => "assets/images/trophy.png";
   static String get logo => "assets/images/logo.png";
 }
+
+extension AppImagesExt on String {
+  get toAppImage => {
+        'hierarchy': AppImages.hierarchy,
+        'data': AppImages.data,
+        'laptop': AppImages.laptop,
+        'blocks': AppImages.blocks,
+        'check': AppImages.check,
+        'error': AppImages.error,
+        'trophy': AppImages.trophy,
+        'logo': AppImages.logo,
+      }[this]!;
+}

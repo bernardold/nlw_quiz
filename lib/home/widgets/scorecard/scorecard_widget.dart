@@ -3,6 +3,10 @@ import 'package:nlw_quiz/core/core.dart';
 import 'package:nlw_quiz/home/widgets/chart/chart_widget.dart';
 
 class ScorecardWidget extends StatelessWidget {
+  final int score;
+
+  const ScorecardWidget({Key? key, required this.score}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,7 +25,7 @@ class ScorecardWidget extends StatelessWidget {
             children: [
               Expanded(
                 flex: 1,
-                child: ChartWidget(),
+                child: ChartWidget(percent: score),
               ),
               Expanded(
                 flex: 3,
