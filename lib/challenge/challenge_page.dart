@@ -3,6 +3,7 @@ import 'package:nlw_quiz/challenge/challenge_controller.dart';
 import 'package:nlw_quiz/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:nlw_quiz/challenge/widgets/question_indicator/question_indicator_widget.dart';
 import 'package:nlw_quiz/challenge/widgets/quiz/quiz_widget.dart';
+import 'package:nlw_quiz/result/result_page.dart';
 import 'package:nlw_quiz/shared/models/quiz_model.dart';
 
 class ChallengePage extends StatefulWidget {
@@ -85,7 +86,16 @@ class _ChallengePageState extends State<ChallengePage> {
                     ? Expanded(
                         child: NextButtonWidget.primary(
                         label: 'Finalizar',
-                        onTap: () => Navigator.pop(context),
+                        onTap: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ResultPage(
+                              challengeName: widget.quiz.title,
+                              correctAnswers: 6,
+                              totalQuestions: widget.quiz.questions.length,
+                            ),
+                          ),
+                        ),
                       ))
                     : Expanded(
                         child: NextButtonWidget.secondary(
