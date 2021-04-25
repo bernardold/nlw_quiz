@@ -18,26 +18,21 @@ class ChallengePage extends StatefulWidget {
 class _ChallengePageState extends State<ChallengePage> {
   final controller = ChallengeController();
   final pageController = PageController();
+  final duration = Duration(milliseconds: 300);
 
-  @override
-  void initState() {
-    pageController.addListener(
-      () => controller.currentQuestion = pageController.page!.toInt(),
-    );
-    super.initState();
-  }
+  bool _lastQuestion() =>
+      controller.currentQuestion >= widget.quiz.questions.length - 1;
 
-  bool lastQuestion() =>
-      controller.currentQuestion == widget.quiz.questions.length - 1;
-
-  void _nextPage() {
-    if (lastQuestion()) {
+  void _nextQuestion() {
+    if (_lastQuestion()) {
+      controller.currentQuestion += 1;
       return;
     }
 
-    pageController.nextPage(
-      duration: Duration(milliseconds: 300),
-      curve: Curves.linear,
+    controller.currentQuestion += 1;
+    Future.delayed(duration).then(
+      (_) => pageController.nextPage(
+          duration: duration, curve: Curves.linear),
     );
   }
 
@@ -73,8 +68,7 @@ class _ChallengePageState extends State<ChallengePage> {
                     controller.correctAnswers = isCorrect
                         ? controller.correctAnswers + 1
                         : controller.correctAnswers;
-                    Future.delayed(Duration(milliseconds: 300))
-                        .then((_) => _nextPage());
+                    _nextQuestion();
                   }))
               .toList()),
       bottomNavigationBar: SafeArea(
@@ -83,26 +77,28 @@ class _ChallengePageState extends State<ChallengePage> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ValueListenableBuilder<int>(
             valueListenable: controller.currentQuestionNotifier,
-            builder: (context, value, _) => lastQuestion()
+            builder: (context, value, _) => _lastQuestion()
                 ? Expanded(
                     child: NextButtonWidget.primary(
-                    label: 'Finalizar',
-                    onTap: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ResultPage(
-                          challengeName: widget.quiz.title,
-                          correctAnswers: controller.correctAnswers,
-                          totalQuestions: widget.quiz.questions.length,
+                      label: 'Finalizar',
+                      onTap: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ResultPage(
+                            challengeName: widget.quiz.title,
+                            correctAnswers: controller.correctAnswers,
+                            totalQuestions: widget.quiz.questions.length,
+                          ),
                         ),
                       ),
                     ),
-                  ))
+                  )
                 : Expanded(
                     child: NextButtonWidget.secondary(
-                    label: 'Pular',
-                    onTap: _nextPage,
-                  )),
+                      label: 'Pular',
+                      onTap: _nextQuestion,
+                    ),
+                  ),
           ),
         ),
       ),
