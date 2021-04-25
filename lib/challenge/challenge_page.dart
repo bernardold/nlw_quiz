@@ -83,32 +83,26 @@ class _ChallengePageState extends State<ChallengePage> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ValueListenableBuilder<int>(
             valueListenable: controller.currentQuestionNotifier,
-            builder: (context, value, _) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // TODO: arrumar os dois botoes na tela da ultima pergunta
-                lastQuestion()
-                    ? Expanded(
-                        child: NextButtonWidget.primary(
-                        label: 'Finalizar',
-                        onTap: () => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ResultPage(
-                              challengeName: widget.quiz.title,
-                              correctAnswers: controller.correctAnswers,
-                              totalQuestions: widget.quiz.questions.length,
-                            ),
-                          ),
+            builder: (context, value, _) => lastQuestion()
+                ? Expanded(
+                    child: NextButtonWidget.primary(
+                    label: 'Finalizar',
+                    onTap: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResultPage(
+                          challengeName: widget.quiz.title,
+                          correctAnswers: controller.correctAnswers,
+                          totalQuestions: widget.quiz.questions.length,
                         ),
-                      ))
-                    : Expanded(
-                        child: NextButtonWidget.secondary(
-                        label: 'Pular',
-                        onTap: _nextPage,
-                      ))
-              ],
-            ),
+                      ),
+                    ),
+                  ))
+                : Expanded(
+                    child: NextButtonWidget.secondary(
+                    label: 'Pular',
+                    onTap: _nextPage,
+                  )),
           ),
         ),
       ),
