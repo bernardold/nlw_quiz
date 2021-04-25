@@ -5,4 +5,6 @@ class ChallengeController {
 
   int get currentQuestion => currentQuestionNotifier.value;
   set currentQuestion(int value) => currentQuestionNotifier.value = value;
+
+  int correctAnswers = 0;
 }

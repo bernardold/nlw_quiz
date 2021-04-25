@@ -69,8 +69,13 @@ class _ChallengePageState extends State<ChallengePage> {
           children: widget.quiz.questions
               .map((e) => QuizWidget(
                   question: e,
-                  onSelected: () => Future.delayed(Duration(milliseconds: 300))
-                      .then((_) => _nextPage())))
+                  onSelected: (isCorrect) {
+                    controller.correctAnswers = isCorrect
+                        ? controller.correctAnswers + 1
+                        : controller.correctAnswers;
+                    Future.delayed(Duration(milliseconds: 300))
+                        .then((_) => _nextPage());
+                  }))
               .toList()),
       bottomNavigationBar: SafeArea(
         bottom: true,
@@ -91,7 +96,7 @@ class _ChallengePageState extends State<ChallengePage> {
                           MaterialPageRoute(
                             builder: (context) => ResultPage(
                               challengeName: widget.quiz.title,
-                              correctAnswers: 6,
+                              correctAnswers: controller.correctAnswers,
                               totalQuestions: widget.quiz.questions.length,
                             ),
                           ),
