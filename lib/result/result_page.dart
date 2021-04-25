@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nlw_quiz/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:nlw_quiz/core/core.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ResultPage extends StatelessWidget {
   final String challengeName;
@@ -16,6 +17,9 @@ class ResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shareMsg = 'DezQuiz\n Acabei de terminar o quiz $challengeName e ' +
+        'acertei $correctAnswers de $totalQuestions perguntas';
+
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(left: 68, right: 68, top: 80),
@@ -51,7 +55,7 @@ class ResultPage extends StatelessWidget {
                   Expanded(
                     child: NextButtonWidget.primaryPurple(
                       label: 'Compartilhar',
-                      onTap: () {},
+                      onTap: () => Share.share(shareMsg),
                     ),
                   )
                 ]),
